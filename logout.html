@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Logout</title>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+  }
+  .message-box {
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+  }
+  h2 {
+    margin-bottom: 15px;
+  }
+  p {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+  }
+</style>
+</head>
+<body>
+  <div class="message-box" id="messageBox">
+    <h2>Logging out...</h2>
+    <p>You have been successfully logged out.</p>
+    <p>Redirecting to login page...</p>
+  </div>
+
+  <script>
+    // Function to delete all cookies (optional, depends if you use cookies for sessions)
+    function clearCookies() {
+      const cookies = document.cookie.split("; ");
+      for (let c of cookies) {
+        const eqPos = c.indexOf("=");
+        const name = eqPos > -1 ? c.substr(0, eqPos) : c;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+      }
+    }
+
+    // Clear client side storage
+    sessionStorage.clear();
+    localStorage.clear();
+    clearCookies();
+
+    // After a delay, redirect to login page
+    setTimeout(() => {
+      window.location.href = 'login.html';  // Change to your login page URL
+    }, 2000);
+  </script>
+</body>
+</html>

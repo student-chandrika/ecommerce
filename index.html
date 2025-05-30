@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Online Store</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-container">
+    <h1>Welcome to Our Store</h1>
+    <nav>
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+      <a href="cart.html" class="cart-link">
+      
+        <img src="https://cdn-icons-png.flaticon.com/512/107/107831.png" alt="Cart" class="cart-icon" width="20" />
+        Cart
+      </a>
+      <!-- Static Logout Button (non-functional in HTML) -->
+      <form style="display: inline;">
+        <button type="button" class="logout-button">Logout</button>
+      </form>
+    </nav>
+  </div>
+</header>
+
+<div class="main-container">
+  <main>
+    <h2>Products</h2>
+    <div class="product-list">
+
+      <!-- Product 1 -->
+      <div class="product">
+        <h3>shoe1</h3>
+        <p>Price: $49.99</p>
+        <p>High-quality shoe with comfortable fit.</p>
+        <img src="https://th.bing.com/th/id/OIP.08tBIvC-aHVX8h9UD_N_0gHaHa?rs=1&pid=ImgDetMain" alt="Running Shoes" width="200" />
+        <form action="cart.html" method="post">
+          <input type="hidden" name="product_id" value="1" />
+          <button type="submit" class="add-to-cart-button">Add to Cart</button>
+        </form>
+      </div>
+
+
+      <!-- Product 2 -->
+      <div class="product">
+        <h3>Smart Watch</h3>
+        <p>Price: $99.99</p>
+        <p>Track fitness and stay connected on the go.</p>
+        <img src="https://m.media-amazon.com/images/I/61ftG19NACL._AC_SL1500_.jpg" alt="Smart Watch" class="product-image" width="100" />
+        <form action="cart.html" method="post">
+          <input type="hidden" name="product_id" value="2" />
+          <button type="submit" class="add-to-cart-button">Add to Cart</button>
+        </form>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="product">
+        <h3>Bluetooth Speaker</h3>
+        <p>Price: $29.99</p>
+        <p>Portable speaker with powerful bass and clear audio.</p>
+        <img src="https://th.bing.com/th/id/OIP.rNxkdzB6EsyKwx3tG_OZvAHaHa?rs=1&pid=ImgDetMain" alt="Bluetooth Speaker" class="product-image" width="200" />
+        <form action="cart.html" method="post">
+          <input type="hidden" name="product_id" value="3" />
+          <button type="submit" class="add-to-cart-button">Add to Cart</button>
+        </form>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<footer>
+  <p>&copy; 2025 Online Store. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

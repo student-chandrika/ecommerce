@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Cart - ShopEase</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7fa;
+      margin: 0; padding: 0;
+    }
+    header {
+      background: #2c3e50;
+      color: white;
+      padding: 15px 20px;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+    th {
+      background: #2c3e50;
+      color: white;
+    }
+    input[type=number] {
+      width: 60px;
+      padding: 6px;
+      text-align: center;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button.update-btn {
+      background: #28a745;
+      color: white;
+      margin-right: 8px;
+    }
+    button.remove-btn {
+      background: #dc3545;
+      color: white;
+    }
+    .total {
+      text-align: right;
+      margin-top: 20px;
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+    @media(max-width: 600px) {
+      table, tbody, tr, th, td {
+        display: block;
+      }
+      tr {
+        margin-bottom: 15px;
+      }
+      th {
+        background: none;
+        color: black;
+        font-weight: bold;
+        padding: 5px 0;
+      }
+      td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+      }
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        padding-left: 10px;
+        font-weight: bold;
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>ShopEase - Your Shopping Cart</h1>
+</header>
+
+<div class="container">
+  <table id="cart-table">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Price ($)</th>
+        <th>Quantity</th>
+        <th>Subtotal ($)</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Items will be populated by JS -->
+    </tbody>
+  </table>
+
+  <div class="total" id="total-price">
+    Total: $0.00
+  </div>
+</div>
+
+<script>
+  // Sample cart data
+  let cart = [
+    { id: 1, name: "Wireless Headphones", price: 49.99, quantity: 2 },
+    { id: 2, name: "Bluetooth Speaker", price: 29.99, quantity: 1 },
+    { id: 3, name: "Smart Watch", price: 99.99, quantity: 1 }
+  ];
+
+  const tbody = document.querySelector("#cart-table tbody");
+  const totalPriceEl = document.getElementById("total-price");
+
+  function renderCart() {
+    tbody.innerHTML = "";
+    let total = 0;
+
+    cart.forEach((item, index) => {
+      const subtotal = (item.price * item.quantity).toFixed(2);
+      total += parseFloat(subtotal);
+
+      const tr = document.createElement("tr");
+
+      tr.innerHTML = `
+        <td data-label="Product">${item.name}</td>
+        <td data-label="Price">$${item.price.toFixed(2)}</td>
+        <td data-label="Quantity">
+          <input type="number" min="1" value="${item.quantity}" data-index="${index}" class="qty-input" />
+        </td>
+        <td data-label="Subtotal">$${subtotal}</td>
+        <td data-label="Actions">
+          <button class="update-btn" data-index="${index}">Update</button>
+          <button class="remove-btn" data-index="${index}">Remove</button>
+        </td>
+      `;
+
+      tbody.appendChild(tr);
+    });
+
+    totalPriceEl.textContent = `Total: $${total.toFixed(2)}`;
+
+    attachEventListeners();
+  }
+
+  function attachEventListeners() {
+    const updateButtons = document.querySelectorAll(".update-btn");
+    const removeButtons = document.querySelectorAll(".remove-btn");
+
+    updateButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const idx = btn.getAttribute("data-index");
+        const input = document.querySelector(`input.qty-input[data-index="${idx}"]`);
+        let newQty = parseInt(input.value);
+
+        if (newQty < 1 || isNaN(newQty)) {
+          alert("Quantity must be at least 1");
+          input.value = cart[idx].quantity;
+          return;
+        }
+
+        cart[idx].quantity = newQty;
+        renderCart();
+      });
+    });
+
+    removeButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const idx = btn.getAttribute("data-index");
+        cart.splice(idx, 1);
+        renderCart();
+      });
+    });
+  }
+
+  // Initial render
+  renderCart();
+</script>
+
+</body>
+</html>
